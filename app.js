@@ -3,11 +3,17 @@ const { loadEnvFile } = require("node:process");
 const path = require("node:path");
 loadEnvFile();
 app = express();
-const companyRouter = require("./routes/companyRoute");
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+const companyRouter = require("./routes/companyRoute");
+const carsRouter = require("./routes/carsRoute");
+
 app.use("/company", companyRouter);
+
+app.use("/cars", carsRouter);
+
 app.use((error, req, res, next) => {
   console.log(error);
 });
