@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parts</title>
+  </head>
+  <body>
+    <% parts.forEach(part=>{ %>
+        <ul>Part Name:<%= part.part_name %>
+        Model Name: <%= part.car_name %>
+        Price: <%= part.price %>
+        </ul>
+<%})%>
+  </body>
+</html>
