@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Companies</title>
+  </head>
+  <body>
+    <% companies.forEach(company=>{ %>
+        <ul>Name:<%= company.name %>
+        Country of origin: <%= company.country %>
+        Rating: <%= company.rating %>
+        </ul>
+<%})%>
+  </body>
+</html>
