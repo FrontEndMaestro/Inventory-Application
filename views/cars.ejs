@@ -8,10 +8,11 @@
   <body>
     <% cars.forEach(car=>{ %>
         <ul>Manufacturer:<%= car.company_name %>
-        Model Name: <%= car.name %>
+          Name: <%=car.name%>
+          Year: <%= car.model_year %>
         Trim: <%= car.trim %>
         Price: <%= car.price %>
-        <a href="cars/update/<%=car.id%>">Edit</a>
+        <a href="/cars/update/<%=car.id%>">Edit</a>
         </ul>
 <%})%>
   </body>
