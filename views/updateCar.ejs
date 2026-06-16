@@ -6,7 +6,7 @@
     <title>Edit Car</title>
   </head>
   <body>
-    <form action="/cars/update" method="POST">
+    <form action="/cars/update/<%=car.id%>" method="POST">
       <label for="name">Car Name:</label>
       <input type="text" id="name" name="name" value="<%= car.car_name %>" />
 
@@ -34,7 +34,7 @@
         name="price"
         value=<%= car.price %>
       />
-      <button type="submit">Create</button>
+      <button type="submit">Update</button>
     </form>
   </body>
 </html>
