@@ -28,4 +28,11 @@ async function getCar(id) {
   return rows[0];
 }
 
-module.exports = { getAllCars, addCar, getCar };
+async function updateCar(data) {
+  await pool.query(
+    "UPDATE cars set name=($1),model_year=($2),trim=($3),price=($4),company_id=($5) where id=($6)",
+    [data.name, data.model, data.trim, data.price, data.company, data.carId],
+  );
+}
+
+module.exports = { getAllCars, addCar, getCar, updateCar };

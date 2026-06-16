@@ -5,5 +5,6 @@ const carsController = require("../controllers/carsController");
 carsRouter.get("/", carsController.getDisplayAll);
 carsRouter.get("/create", carsController.getAddCar);
 carsRouter.post("/create", carsController.postAddCar);
-carsRouter.get('/update/:carId',carsController.getUpdateCar)
+carsRouter.get("/update/:carId", carsController.getUpdateCar);
+carsRouter.post("/update/:carId", carsController.postUpdateCar);
 module.exports = carsRouter;

@@ -17,11 +17,24 @@ async function postAddCar(req, res) {
 }
 
 async function getUpdateCar(req, res) {
-  console.log(req.params);
   let car = await carsModel.getCar(req.params.carId);
+  car.id = req.params.carId;
   let companies = await companyModel.fetchAllCompanies();
-  car.price = car.price.splice(0,2).filter((item) => item != ",");
+
   res.render("updateCar", { car, companies });
 }
 
-module.exports = { getDisplayAll, getAddCar, postAddCar, getUpdateCar };
+async function postUpdateCar(req, res) {
+  let carId = req.params.carId;
+  req.body.carId = carId;
+  let car = await carsModel.updateCar(req.body);
+  res.redirect("/cars");
+}
+
+module.exports = {
+  getDisplayAll,
+  getAddCar,
+  postAddCar,
+  getUpdateCar,
+  postUpdateCar,
+};
