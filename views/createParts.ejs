@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add a Part</title>
+  </head>
+  <body>
+
+    <!--* CREATE TABLE IF NOT EXISTS parts (
+  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  name VARCHAR(255),
+  price MONEY
+);
+
+CREATE TABLE IF NOT EXISTS car_parts (
+  car_id INTEGER, 
+  part_id INTEGER,
+  CONSTRAINT fk_car_id FOREIGN KEY (car_id) REFERENCES cars(id),
+  CONSTRAINT fk_part_id FOREIGN KEY (part_id) REFERENCES parts(id)
+);-->
+    <form action="/parts/create" method="POST">
+      <label for="name">Part Name:</label>
+      <input type="text" id="name" name="name" />
+
+      <label for="car">For Car:</label>
+      <select name="carId" id="car">
+        <option value="" disabled selected>Select car model</option>
+        <% cars.forEach(car=>{ %>
+            <option value="<%= car.id %>"><%= car.name %></option>
+        <% }) %>
+      </select>
+      <label for="price">Price:</label>
+      <input
+        type="number"
+        min="0.1"
+        step="0.01"
+        id="price"
+        name="price"
+      />
+      <button type="submit">Create</button>
+    </form>
+  </body>
+</html>
