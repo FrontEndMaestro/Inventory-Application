@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Car</title>
+  </head>
+  <body>
+    <form action="/cars/update" method="POST">
+      <label for="name">Car Name:</label>
+      <input type="text" id="name" name="name" value="<%= car.car_name %>" />
+
+      <label for="company">Manufacturer:</label>
+      <select name="company" id="company">
+        <option value=<%= car.company_id %> selected><%= car.company_name %></option>
+        <% companies.forEach(company=>{ %>
+            <% if(company.name!=car.company_name){ %>
+            <option value="<%= company.id %>"><%= company.name %></option><% } %>
+        <% }) %>
+      </select>
+
+      <label for="model">Model Year</label>
+      <input type="numeric" id="model" name="model" min="1900" max="2026" step="1" value="<%= car.model_year %>"/>
+
+      <label for="trim">Trim:</label>
+      <input type="text" id="trim" name="trim" value="<%= car.trim %>" />
+
+      <label for="price">Price:</label>
+      <input
+        type="number"
+        min="0.1"
+        step="0.01"
+        id="price"
+        name="price"
+        value=<%= car.price %>
+      />
+      <button type="submit">Create</button>
+    </form>
+  </body>
+</html>
