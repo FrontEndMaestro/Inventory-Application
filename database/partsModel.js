@@ -46,4 +46,9 @@ async function updatePart(data) {
   ]);
 }
 
-module.exports = { getAllParts, createPart, getPart, updatePart };
+async function deletePart(partId) {
+  await pool.query("DELETE FROM car_parts where part_id=($1)", [partId]);
+  await pool.query("DELETE FROM parts where id=($1) ", [partId]);
+}
+
+module.exports = { getAllParts, createPart, getPart, updatePart, deletePart };

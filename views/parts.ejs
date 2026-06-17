@@ -11,7 +11,26 @@
         Model Name: <%= part.car_name %>
         Price: <%= part.price %>
         <a href="parts/update/<%=part.id%>">Edit</a>
+        <button onclick="deletePart('<%=part.id%>')">Delete</button>
         </ul>
 <%})%>
   </body>
+  <script>
+   async function deletePart(partId){
+      try {
+        const response=await fetch(`/parts/delete/${partId}`,{
+        method:"DELETE"})
+        if(response.ok){
+          window.location.reload()
+        }
+        else{
+          console.error("failed to delete",response.status)
+        }
+      
+      } catch (error) {
+        console.error("error deleting item",error)
+      }
+      
+    }
+  </script>
 </html>

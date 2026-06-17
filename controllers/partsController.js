@@ -3,6 +3,7 @@ const {
   createPart,
   getPart,
   updatePart,
+  deletePart,
 } = require("../database/partsModel");
 const carsModel = require("../database/carsModel");
 async function getDisplayAll(req, res) {
@@ -33,10 +34,17 @@ async function partUpdatePost(req, res) {
   res.redirect("/parts");
 }
 
+async function partDelete(req, res) {
+  let partId = req.params.partId;
+  await deletePart(partId);
+  res.status(200).end();
+}
+
 module.exports = {
   getDisplayAll,
   partCreateGet,
   partCreatePost,
   partUpdateGet,
   partUpdatePost,
+  partDelete,
 };
