@@ -11,7 +11,27 @@
         Country of origin: <%= company.country %>
         Rating: <%= company.rating %>
         <a href="/company/update/<%=company.id %>">Edit</a>
+        <button onclick="deleteCompany('<%=company.id%>')">Delete</button>
         </ul>
 <%})%>
   </body>
+  <script>
+      async function deleteCompany(companyId){
+        console.log("here we go")
+      try {
+        const response=await fetch(`/company/delete/${companyId}`,{
+        method:"DELETE"})
+        if(response.ok){
+          window.location.reload()
+        }
+        else{
+          console.error("failed to delete",response.status)
+        }
+      
+      } catch (error) {
+        console.error("error deleting item",error)
+      }
+      
+    }
+  </script>
 </html>

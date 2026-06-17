@@ -3,6 +3,7 @@ const {
   addCompany,
   getCompany,
   updateCompany,
+  deleteCompany,
 } = require("../database/companyModel");
 
 async function getDisplayAll(req, res) {
@@ -16,7 +17,6 @@ function companyCreateGet(req, res) {
 }
 
 async function companyCreatePost(req, res) {
-  console.log(req.body);
   await addCompany(req.body);
   res.redirect("/company");
 }
@@ -33,10 +33,18 @@ async function companyUpdatePost(req, res) {
   res.redirect("/company");
 }
 
+async function companyDelete(req, res) {
+  let companyId = req.params.companyId;
+  await deleteCompany(companyId);
+
+  res.status(200).end();
+}
+
 module.exports = {
   getDisplayAll,
   companyCreateGet,
   companyCreatePost,
   companyUpdateGet,
   companyUpdatePost,
+  companyDelete,
 };

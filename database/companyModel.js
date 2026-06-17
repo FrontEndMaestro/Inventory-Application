@@ -1,4 +1,5 @@
 const pool = require("./dbConnection");
+const carsModel = require("./carsModel");
 
 async function fetchAllCompanies() {
   const { rows } = await pool.query("SELECT * FROM company");
@@ -24,4 +25,15 @@ async function updateCompany(data) {
   );
 }
 
-module.exports = { fetchAllCompanies, addCompany, getCompany, updateCompany };
+async function deleteCompany(companyId) {
+  await carsModel.deleteAllCarsInCompany(companyId);
+  await pool.query("DELETE FROM company where id=($1)", [companyId]);
+}
+
+module.exports = {
+  fetchAllCompanies,
+  addCompany,
+  getCompany,
+  updateCompany,
+  deleteCompany,
+};

@@ -7,4 +7,5 @@ companyRouter.get("/create", companyController.companyCreateGet);
 companyRouter.post("/create", companyController.companyCreatePost);
 companyRouter.get("/update/:companyId", companyController.companyUpdateGet);
 companyRouter.post("/update/:companyId", companyController.companyUpdatePost);
+companyRouter.delete("/delete/:companyId", companyController.companyDelete);
 module.exports = companyRouter;
