@@ -4,35 +4,143 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add a Car</title>
+    <style>
+      body {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        line-height: 1.5;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffed48;
+      }
+
+      h1 {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-weight: 500;
+        background-color: #ffffff;
+        padding: 20px 30px;
+        width: fit-content;
+        border-radius: 30px;
+        margin-bottom: 2rem;
+      }
+
+      .form-container {
+        border-radius: 80px;
+        padding: 3rem 5rem;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: white;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      label {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: -1rem;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        padding: 15px 20px;
+        border-radius: 30px;
+        border: none;
+        font-family: inherit;
+        font-size: 1rem;
+        background-color: #ffffff;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      input:focus, .select-wrapper:focus-within {
+        outline: 3px solid #8200ff;
+      }
+
+      .select-wrapper {
+        background-color: #ffffff;
+        border-radius: 30px;
+        padding: 5px 20px; 
+        box-sizing: border-box;
+        width: 100%;
+      }
+
+      .select-wrapper select {
+        width: 100%;
+        padding: 10px 0;
+        border: none;
+        background: transparent;
+        font-family: inherit;
+        font-size: 1rem;
+        color: #000;
+        cursor: pointer;
+      }
+
+      .select-wrapper select:focus {
+        outline: none; 
+      }
+
+      .btn-submit {
+        margin-top: 1rem;
+        padding: 15px 40px;
+        font-weight: 600;
+        border-radius: 90px;
+        border: 2px solid white;
+        cursor: pointer;
+        transition: all .5s ease;
+        font-size: 1.1rem;
+        font-family: inherit;
+        background-color: #8200ff;
+        color: white;
+        width: fit-content;
+        align-self: flex-start;
+      }
+
+      .btn-submit:hover {
+        scale: 1.1;
+        background-color: #ffffff;
+        color: #000;
+      }
+    </style>
   </head>
   <body>
-    <form action="/cars/create" method="POST">
-      <label for="name">Car Name:</label>
-      <input type="text" id="name" name="name" />
+    <h1>Add New Car</h1>
 
-      <label for="company">Manufacturer:</label>
-      <select name="company" id="company">
-        <option value="" disabled selected>Select company</option>
-        <% companies.forEach(company=>{ %>
-            <option value="<%= company.id %>"><%= company.name %></option>
-        <% }) %>
-      </select>
+    <div class="form-container">
+      <form action="/cars/create" method="POST">
+        <label for="name">Car Name:</label>
+        <input type="text" id="name" name="name" required/>
 
-      <label for="model">Model Year</label>
-      <input type="numeric" id="model" name="model" min="1900" max="2026" step="1"/>
+        <label for="company">Manufacturer:</label>
+        <div class="select-wrapper">
+          <select name="company" id="company" required>
+            <option value="" disabled selected>Select company</option>
+            <% companies.forEach(company=>{ %>
+                <option value="<%= company.id %>"><%= company.name %></option>
+            <% }) %>
+          </select>
+        </div>
 
-      <label for="trim">Trim:</label>
-      <input type="text" id="trim" name="trim" />
+        <label for="model">Model Year</label>
+        <input type="number" id="model" name="model" min="1900" max="2026" step="1" required/>
 
-      <label for="price">Price:</label>
-      <input
-        type="number"
-        min="0.1"
-        step="0.01"
-        id="price"
-        name="price"
-      />
-      <button type="submit">Create</button>
-    </form>
+        <label for="trim">Trim:</label>
+        <input type="text" id="trim" name="trim" required />
+
+        <label for="price">Price:</label>
+        <input
+          type="number"
+          min="0.1"
+          step="0.01"
+          id="price"
+          name="price"
+          required
+        />
+        
+        <button type="submit" class="btn-submit">Create</button>
+      </form>
+    </div>
   </body>
 </html>
