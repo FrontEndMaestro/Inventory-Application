@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Inventory - Hierarchical View</title>
+    <style>
+      body {
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        line-height: 1.5;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffed48;
+      }
+
+      body>h1{
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-weight: 500;
+        background-color: #ffffff;
+        padding: 20px 30px;
+        width: fit-content;
+        border-radius: 30px;
+      }
+
+      .nav-dashboard {
+        box-shadow: 0px 5px 1px 1px rgba(98, 98, 98, 0.2);
+        padding: 1rem;
+        border-radius: 70px; 
+        margin-bottom: 2rem;
+        text-align: center;
+        border: 2px solid white;
+      }
+      .nav-dashboard a {
+        display: inline-block;
+        margin-right: 15px;
+        padding: 8px 16px;
+        background-color: rgb(178 178 178 / 30%);
+        color: #333;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: 600;
+        border-radius: 90px;
+        width: 15%;
+        padding: 30px 0px;
+        transition: all .5s ease;
+      }
+      .nav-dashboard a:hover {
+        background-color: #ffffff;
+        scale: 1.1;
+      }
+
+      .company-list {
+        list-style-type: none;
+        padding-left: 0;
+      }
+      .company-card {
+        
+        border-radius:110px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        background-color: rgba(0 0 0 / 30%);
+        padding-left:80px;
+        padding-right:80px ;
+
+      }
+      .car-list {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 1rem;
+        
+      }
+      .car-card {
+        border-left: 3px solid blue;
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+      .part-list {
+        list-style-type: disc;
+        margin-top: 0.5rem;
+        padding-left: 2rem;
+        color: #495057;
+      }
+      .part-item {
+        margin-bottom: 0.5rem;
+      }
+      
+      .empty-state {
+        color: #6c757d;
+        font-style: italic;
+        margin-top: 0.5rem;
+      }
+
+      .company-heading{
+        color: white;
+        background-color: #010000;
+        
+        padding-top: 9.5px;
+        padding-bottom: 11px;
+        padding-left: 30px;
+        padding-right: 0px;
+        width: fit-content;
+        border-radius: 30px;
+      }
+      .company-heading>span{
+        background-color: #8200ff;
+        min-height: 100%;
+        padding: 15px 20px;
+        border-radius: 30px;
+        margin-left: 10px;
+        color: white;
+        font-weight: 500;
+        font-size: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Showroom Inventory</h1>
+
+    <div class="nav-dashboard">
+      <a href="/company">Edit Companies</a>
+      <a href="/cars">Edit Cars</a>
+      <a href="/parts">Edit Parts</a>
+    </div>
+
+    <% if (companies && companies.length > 0) { %>
+      <ul class="company-list">
+        
+        <% companies.forEach(company => { %>
+          <li class="company-card">
+            <h3 class="company-heading">
+               <%= company.name %> 
+              <span >
+                (<%= company.country %> | Rating: <%= company.rating %>)
+              </span>
+              
+            </h3>
+
+            <% const companyCars = cars.filter(car => car.company_name === company.name); %>
+            <% if (companyCars.length > 0) { %>
+              <ul class="car-list">
+                <% companyCars.forEach(car => { %>
+                  <li class="car-card">
+                    <strong> <%= car.name %></strong> 
+                    (<%= car.model_year %> - <%= car.trim %> | Price: $<%= car.price %>)
+                    
+
+                    <% const carParts = parts.filter(part => part.car_name === car.name); %>
+                    <% if (carParts.length > 0) { %>
+                      <ul class="part-list">
+                        <% carParts.forEach(part => { %>
+                          <li class="part-item">
+                             <%= part.part_name %> | Price: $<%= part.price %>
+                           
+                          </li>
+                        <% }) %>
+                      </ul>
+                    <% } else { %>
+                      <div class="empty-state">No parts listed for this car.</div>
+                    <% } %>
+                    </li>
+                <% }) %>
+              </ul>
+            <% } else { %>
+              <div class="empty-state">No cars listed for this company.</div>
+            <% } %>
+            </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No companies found in the database.</p>
+    <% } %>
+
+  </body>
+
+  <script>
+    addEventListener("pageshow",(event)=>{
+      if(event.persisted){
+        window.location.reload();
+      }
+    })
+  </script>
+</html>
