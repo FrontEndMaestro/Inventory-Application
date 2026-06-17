@@ -4,33 +4,187 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parts</title>
+    <style>
+      body {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        line-height: 1.5;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffed48;
+      }
+
+      body > h1 {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-weight: 500;
+        background-color: #ffffff;
+        padding: 20px 30px;
+        width: fit-content;
+        border-radius: 30px;
+      }
+
+      .part-list {
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      .part-card {
+        border-radius: 110px;
+        padding: 2rem 5rem;
+        margin-bottom: 2rem;
+        background-color: rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .part-heading {
+        color: white;
+        background-color: #010000;
+        padding-left: 20px;
+        width: fit-content;
+        border-radius: 30px;
+        margin-top: 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .part-heading > span {
+        background-color: #8200ff;
+        padding: 15px 20px;
+        border-radius: 30px;
+        margin-left: 10px;
+        color: white;
+        font-weight: 500;
+        font-size: 1rem;
+      }
+
+      .part-details {
+        color: black;
+        font-weight: 600;
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+         border: 2px solid rgb(82, 82, 82);
+        padding: 10px 20px;
+        border-radius: 20px;
+        box-shadow: 0px 5px 1px 0px rgb(0 0 255 / 0.2);
+      }
+
+      .action-buttons {
+        margin-top: 1rem;
+        margin-left: 2rem;
+      }
+
+      .btn {
+        display: inline-block;
+        margin-right: 15px;
+        padding: 12px 30px;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 90px;
+        border: 2px solid white;
+        cursor: pointer;
+        transition: all .5s ease;
+        font-size: 1rem;
+        font-family: inherit;
+      }
+
+      .btn-edit {
+        background-color: rgba(178, 178, 178, 0.3);
+        color: white;
+      }
+
+      .btn-delete {
+        background-color: #ff3b3b;
+        color: white;
+      }
+
+      .btn:hover {
+        scale: 1.1;
+        background-color: #ffffff;
+        color: #000;
+      }
+
+      .add{
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        display: inline-block;
+        outline: none;
+        border: none;
+        padding: 5px 20px;
+        border-radius: 30px;
+        display: flex;
+        align-items: center ;
+        justify-content: center;
+        transition: all 0.2s ease;
+        font-size: 2rem;
+        text-decoration: none;
+        background-color: white;
+        width: fit-content;
+        right:20%;
+        top: 8%;
+        position: absolute;
+        color: black;
+      }
+      .add:hover{
+        scale: 1.1;
+        cursor: pointer;
+        background-color: #8200ff;
+        color: white;
+
+      }
+    </style>
   </head>
   <body>
-    <% parts.forEach(part=>{ %>
-        <ul>Part Name:<%= part.part_name %>
-        Model Name: <%= part.car_name %>
-        Price: <%= part.price %>
-        <a href="parts/update/<%=part.id%>">Edit</a>
-        <button onclick="deletePart('<%=part.id%>')">Delete</button>
-        </ul>
-<%})%>
+    <h1>Manage Parts</h1>
+    <a href="/parts/create" class="add">Add</a>
+    <ul class="part-list">
+      <% parts.forEach(part => { %>
+        <li class="part-card">
+          
+          <h3 class="part-heading">
+            <%= part.part_name %> 
+            <span>
+              <%= part.car_name %>
+            </span>
+          </h3>
+          
+          <div class="part-details">
+            Price: $<%= part.price %>
+          </div>
+
+          <div class="action-buttons">
+            <a href="/parts/update/<%=part.id%>" class="btn btn-edit">Edit</a>
+            <button onclick="deletePart('<%=part.id%>')" class="btn btn-delete">Delete</button>
+          </div>
+
+        </li>
+      <% }) %>
+    </ul>
+
   </body>
   <script>
-   async function deletePart(partId){
-      try {
-        const response=await fetch(`/parts/delete/${partId}`,{
-        method:"DELETE"})
-        if(response.ok){
-          window.location.reload()
-        }
-        else{
-          console.error("failed to delete",response.status)
-        }
-      
-      } catch (error) {
-        console.error("error deleting item",error)
+
+    addEventListener("pageshow",(event)=>{
+      if(event.persisted){
+        window.location.reload();
       }
-      
+    })
+
+    async function deletePart(partId) {
+      if (!confirm("Are you sure you want to delete this part?")) return;
+      try {
+        const response = await fetch(`/parts/delete/${partId}`, {
+          method: "DELETE"
+        });
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          console.error("failed to delete", response.status);
+        }
+      } catch (error) {
+        console.error("error deleting item", error);
+      }
     }
   </script>
 </html>

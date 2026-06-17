@@ -4,41 +4,126 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add a Part</title>
+    <style>
+      body {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        line-height: 1.5;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffed48;
+      }
+
+      h1 {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-weight: 500;
+        background-color: #ffffff;
+        padding: 20px 30px;
+        width: fit-content;
+        border-radius: 30px;
+        margin-bottom: 2rem;
+      }
+
+      .form-container {
+        border-radius: 80px;
+        padding: 3rem 5rem;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: white;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      label {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: -1rem;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      select {
+        padding: 15px 20px;
+        border-radius: 30px;
+        border: none;
+        font-family: inherit;
+        font-size: 1rem;
+        background-color: #ffffff;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      input:focus {
+        outline: 3px solid #8200ff;
+      }
+
+      .btn-submit {
+        margin-top: 1rem;
+        padding: 15px 40px;
+        font-weight: 600;
+        border-radius: 90px;
+        border: 2px solid white;
+        cursor: pointer;
+        transition: all .5s ease;
+        font-size: 1.1rem;
+        font-family: inherit;
+        background-color: #8200ff;
+        color: white;
+        width: fit-content;
+        align-self: flex-start;
+      }
+
+      .btn-submit:hover {
+        scale: 1.1;
+        background-color: #ffffff;
+        color: #000;
+      }
+
+      .select-wrapper{
+        padding: 15px 20px;
+        background-color: white;
+        border-radius: 30px;
+      }
+
+      select{
+        padding: 0;
+      }
+    </style>
   </head>
   <body>
+    <h1>Add New Part</h1>
 
-    <!--* CREATE TABLE IF NOT EXISTS parts (
-  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  name VARCHAR(255),
-  price MONEY
-);
+    <div class="form-container">
+      <form action="/parts/create" method="POST">
+        <label for="name">Part Name:</label>
+        <input type="text" id="name" name="name" />
 
-CREATE TABLE IF NOT EXISTS car_parts (
-  car_id INTEGER, 
-  part_id INTEGER,
-  CONSTRAINT fk_car_id FOREIGN KEY (car_id) REFERENCES cars(id),
-  CONSTRAINT fk_part_id FOREIGN KEY (part_id) REFERENCES parts(id)
-);-->
-    <form action="/parts/create" method="POST">
-      <label for="name">Part Name:</label>
-      <input type="text" id="name" name="name" />
-
-      <label for="car">For Car:</label>
-      <select name="carId" id="car">
-        <option value="" disabled selected>Select car model</option>
-        <% cars.forEach(car=>{ %>
+        <label for="car">For Car:</label>
+        <div class="select-wrapper">
+           <select name="carId" id="car">
+          <option value="" disabled selected>Select car model</option>
+          <% cars.forEach(car=>{ %>
             <option value="<%= car.id %>"><%= car.name %></option>
-        <% }) %>
-      </select>
-      <label for="price">Price:</label>
-      <input
-        type="number"
-        min="0.1"
-        step="0.01"
-        id="price"
-        name="price"
-      />
-      <button type="submit">Create</button>
-    </form>
+          <% }) %>
+        </select>
+        </div>
+       
+
+        <label for="price">Price:</label>
+        <input
+          type="number"
+          min="0.1"
+          step="0.01"
+          id="price"
+          name="price"
+        />
+
+        <button type="submit" class="btn-submit">Create</button>
+      </form>
+    </div>
+
   </body>
 </html>
