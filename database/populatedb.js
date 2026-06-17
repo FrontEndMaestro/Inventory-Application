@@ -1,4 +1,4 @@
-const { Client } = require("pg");
+const { Pool } = require("pg");
 const { loadEnvFile } = require("node:process");
 loadEnvFile();
 const sql = `
@@ -71,8 +71,15 @@ INSERT INTO car_parts (car_id, part_id) VALUES
 
 async function main() {
   console.log("seeding...");
-  const client = new Client({
-    connectionString: `postgresql://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.DBHOST}:5432/inventory_application`,
+  const client = new Pool({
+    host: process.env.DBHOST,
+    database: process.env.DBNAME,
+    username: process.env.USERNAME,
+    password: process.env.PASSWORD,
+    port: 5432,
+    ssl: {
+      require: true,
+    },
   });
   await client.connect();
   await client.query(sql);
