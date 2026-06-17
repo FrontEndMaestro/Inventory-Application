@@ -1,4 +1,5 @@
 const pool = require("./dbConnection");
+const partsModel = require("./partsModel");
 
 async function getAllCars() {
   const { rows } = await pool.query(
@@ -10,8 +11,6 @@ async function getAllCars() {
 }
 
 async function addCar(data) {
-  //name, model_year, trim, price, company_id
-  console.log(data);
   await pool.query(
     "INSERT INTO cars (name,model_year,trim,price,company_id) VALUES ($1,$2,$3,$4,$5)",
     [data.name, data.model, data.trim, data.price, data.company],
@@ -35,4 +34,36 @@ async function updateCar(data) {
   );
 }
 
-module.exports = { getAllCars, addCar, getCar, updateCar };
+async function deleteCar(carId) {
+  let { rows } = await pool.query(
+    "SELECT part_id,id,name from cars inner join car_parts on car_id=id",
+  );
+  let data = rows;
+  if (data != undefined) {
+    for (const part of data) {
+      await partsModel.deletePart(part.part_id);
+    }
+  }
+
+  await pool.query("DELETE FROM cars where id=($1)", [carId]);
+}
+
+async function deleteAllCarsInCompany(companyId) {
+  const results = await pool.query("SELECT * FROM cars where company_id=($1)", [
+    companyId,
+  ]);
+  if (results.rows) {
+    for (const car of results.rows) {
+      await deleteCar(car.id);
+    }
+  }
+}
+
+module.exports = {
+  getAllCars,
+  addCar,
+  getCar,
+  updateCar,
+  deleteCar,
+  deleteAllCarsInCompany,
+};

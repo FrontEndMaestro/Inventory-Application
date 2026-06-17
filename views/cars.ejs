@@ -13,7 +13,22 @@
         Trim: <%= car.trim %>
         Price: <%= car.price %>
         <a href="/cars/update/<%=car.id%>">Edit</a>
+        <button onclick="deleteCar('<%=car.id%>')">Delete</button>
         </ul>
 <%})%>
   </body>
+  <script>
+    async function deleteCar(carId){
+      try {
+         const response =await fetch(`/cars/delete/${carId}`,{method:"DELETE"})
+      if(response.ok){
+        window.location.reload()
+      }
+      else console.error("Cant delete car")
+      } catch (error) {
+        console.error(error)
+      }
+     
+    }
+  </script>
 </html>

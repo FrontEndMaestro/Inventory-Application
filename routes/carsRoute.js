@@ -7,4 +7,5 @@ carsRouter.get("/create", carsController.getAddCar);
 carsRouter.post("/create", carsController.postAddCar);
 carsRouter.get("/update/:carId", carsController.getUpdateCar);
 carsRouter.post("/update/:carId", carsController.postUpdateCar);
+carsRouter.delete("/delete/:carId", carsController.carDelete);
 module.exports = carsRouter;

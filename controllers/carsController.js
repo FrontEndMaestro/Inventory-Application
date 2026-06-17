@@ -2,7 +2,6 @@ const carsModel = require("../database/carsModel");
 const companyModel = require("../database/companyModel");
 async function getDisplayAll(req, res) {
   let data = await carsModel.getAllCars();
-  console.log(data);
   res.render("cars", { cars: data });
 }
 
@@ -31,10 +30,17 @@ async function postUpdateCar(req, res) {
   res.redirect("/cars");
 }
 
+async function carDelete(req, res) {
+  let carId = req.params.carId;
+  await carsModel.deleteCar(carId);
+  res.status(200).end();
+}
+
 module.exports = {
   getDisplayAll,
   getAddCar,
   postAddCar,
   getUpdateCar,
   postUpdateCar,
+  carDelete,
 };
