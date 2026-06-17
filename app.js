@@ -1,7 +1,6 @@
 const express = require("express");
-const { loadEnvFile } = require("node:process");
 const path = require("node:path");
-loadEnvFile();
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.set("views", path.join(__dirname, "views"));
