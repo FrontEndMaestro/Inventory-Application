@@ -26,24 +26,29 @@
       .nav-dashboard {
         box-shadow: 0px 5px 1px 1px rgba(98, 98, 98, 0.2);
         padding: 1rem;
+        font-size: 1rem;
         border-radius: 70px; 
         margin-bottom: 2rem;
         text-align: center;
         border: 2px solid white;
+        display: flex;
+        width: 100%;
+        justify-content: center;
       }
       .nav-dashboard a {
-        display: inline-block;
+        display: flex;
+    justify-content: center;
+    align-items: center;
         margin-right: 15px;
-        padding: 8px 16px;
         background-color: rgb(178 178 178 / 30%);
         color: #333;
         text-decoration: none;
-        border-radius: 4px;
         font-weight: 600;
         border-radius: 90px;
-        width: 15%;
+        width: 110px;
         padding: 30px 0px;
         transition: all .5s ease;
+        vertical-align: center;
       }
       .nav-dashboard a:hover {
         background-color: #ffffff;
@@ -71,9 +76,15 @@
         
       }
       .car-card {
-        border-left: 3px solid blue;
-        padding: 1rem;
-        margin-bottom: 1rem;
+    color: black;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    border: 2px solid rgb(82, 82, 82);
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0px 5px 1px 0px rgb(0 0 255 / 0.2);
+
       }
       .part-list {
         list-style-type: disc;
@@ -111,6 +122,26 @@
         color: white;
         font-weight: 500;
         font-size: 1rem;
+      }
+
+      @media(width<=500px){
+        .company-card{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+.company-heading{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    padding-top: 10px;
+}
+.company-heading>span{
+    margin-left: 0;
+    margin-top: 10px;
+}
       }
     </style>
   </head>
